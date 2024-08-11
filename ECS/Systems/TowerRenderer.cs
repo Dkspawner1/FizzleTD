@@ -32,11 +32,6 @@ public class TowerRenderer : EntityDrawSystem
 
             var circle = circleMapper.Get(entity);
 
-            var br = sprite.GetBoundingRectangle(transform);
-            float sqrt = (float)Math.Sqrt((br.
-                Width * br.Width + br.Height * br.Height) / 2); 
-            circle.Circle = new CircleF(new Vector2(br.X /2 , br.Height / 2), sqrt);
-
             DrawTower(sprite, transform);
             DrawCircle(circle);
 
