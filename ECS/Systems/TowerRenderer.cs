@@ -44,9 +44,7 @@ public class TowerRenderer : EntityDrawSystem
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
         sprite.Draw(spriteBatch, transform.Position, transform.Rotation, transform.Scale);
 
-        Trace.WriteLine(center);
         spriteBatch.DrawRectangle(new RectangleF(center.X, center.Y, 100f, 100f), Color.Red, 2f);
-
 
         spriteBatch.End();
     }
