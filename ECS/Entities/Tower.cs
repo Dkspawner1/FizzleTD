@@ -8,22 +8,36 @@ namespace FizzleTD.ECS.Entities;
 
 public class Tower
 {
+    // The Entity representing this Tower in the ECS framework.
     protected Entity Entity { get; private set; }
+
+    // Constructor to create a new Tower
     public Tower(World world, TowerComponent towerComponent)
     {
+        // Create a new entity within the provided world.
         Entity = world.CreateEntity();
 
-        // Tower's Position:
-        towerComponent.Transform.Position = new Vector2(Data.Window.Width / 2 - towerComponent.Sprite.TextureRegion.Width / 2, Data.Window.Height / 2 - towerComponent.Sprite.TextureRegion.Height / 2);
+        // Calculate and set the tower's position to center it on the screen,
+        // considering the sprite's origin and scale.
+        towerComponent.Transform.Position = new Vector2(
+            (Data.Window.Width - towerComponent.Sprite.TextureRegion.Width * towerComponent.Transform.Scale.X) / 2,
+            (Data.Window.Height - towerComponent.Sprite.TextureRegion.Height * towerComponent.Transform.Scale.Y) / 2
+        ) - towerComponent.Sprite.Origin * towerComponent.Transform.Scale;
 
+        // Calculate the tower's center position, considering origin and scale.
+        towerComponent.TowerCenter = towerComponent.Transform.Position +
+         (towerComponent.Sprite.TextureRegion.Bounds.Size.ToVector2() - towerComponent.Sprite.Origin) * towerComponent.Transform.Scale / 2;
+
+        // Attach the tower component to the entity.
         Entity.Attach(towerComponent);
 
-        // Circle's Position: 
-        var towerCenter = new Vector2(
-               towerComponent.Transform.Position.X + towerComponent.Sprite.TextureRegion.Width / 2,
-               towerComponent.Transform.Position.Y + towerComponent.Sprite.TextureRegion.Height / 2
-           );
+        // Attach a circle component centered around the tower with a specified radius and color.
+        var circleComponent = new CircleComponent(new CircleF(towerComponent.TowerCenter, 325f))
+        {
+            Color = Color.DarkRed,
+            Alpha = 255 / 2 // Set the alpha to 50%.
+        };
 
-        Entity.Attach(new CircleComponent(new CircleF(towerCenter,325f)) { Color = Color.DarkRed, Alpha = 255 / 2 });
+        Entity.Attach(circleComponent);
     }
 }
