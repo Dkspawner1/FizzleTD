@@ -22,7 +22,6 @@ public class WaveSystem : EntityProcessingSystem
         var wave = waveComponentMapper.Get(entityId);
         
         var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-      
         foreach (var enemy in wave.EnemyQueue)
         {
             var sprite = enemy.Sprite;
@@ -30,7 +29,7 @@ public class WaveSystem : EntityProcessingSystem
             
 
 
-            transform.Position += new Vector2(speed + delta, transform.Position.Y);
+            //transform.Position += new Vector2(speed + delta, transform.Position.Y);
 
             //Trace.WriteLine(transform.Position);
 
